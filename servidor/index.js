@@ -33,15 +33,12 @@ app.get('/autenticar', async function(req, res){
 })
 
 app.get('/', async function(req, res){
-  //var resultado = await usuario.findAll();
   res.render("home")
 })
 
-// JWT autenticacao
-app.post('/logar', (req, res, next) => {
+app.post('/logar', (req, res) => {
   if(req.body.user === 'luiz' && req.body.password === '123'){
-    //auth ok
-    const id = 1; //esse id viria do banco de dados
+    const id = 1;
     const token = jwt.sign({ id }, process.env.SECRET, {
       expiresIn: 300 // expires in 5min
     });
@@ -55,7 +52,7 @@ app.post('/logar', (req, res, next) => {
 
 app.post('/deslogar', function(req, res) {
   res.cookie('token', null, { httpOnly: true });
-  res.json("{deslogado: true}")
+  res.json({deslogado: true})
 })
 
 app.listen(3000, function() {
